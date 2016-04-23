@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.jacksen.mvpdemo.model.LoginModelImpl;
 import com.jacksen.mvpdemo.presenter.LoginPresenter;
 import com.jacksen.mvpdemo.presenter.LoginPresenterImpl;
 import com.jacksen.mvpdemo.view.LoginView;
@@ -22,6 +22,8 @@ import com.jacksen.mvpdemo.view.LoginView;
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private ProgressBar progressBar;
+
+    private ScrollView loginForm;
 
     private EditText inputPhoneEt;
 
@@ -41,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         }
 
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
+        loginForm = (ScrollView) findViewById(R.id.login_form);
         inputPhoneEt = (EditText) findViewById(R.id.input_phone_et);
         inputPwdEt = (EditText) findViewById(R.id.input_password_et);
         loginBtn = (Button) findViewById(R.id.login_button);
@@ -60,11 +63,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void showLoadingDialog() {
         progressBar.setVisibility(View.VISIBLE);
+        loginForm.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void hideLoadingDialog() {
         progressBar.setVisibility(View.INVISIBLE);
+        loginForm.setVisibility(View.VISIBLE);
     }
 
     @Override
