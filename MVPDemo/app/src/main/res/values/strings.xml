@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MVPDemo</string>
+
+    <string name="hint_input_phone">请输入手机号码</string>
+
+    <string name="hint_input_password">请输入密码</string>
+
+    <string name="login_button">登录</string>
+
+    <string name="search_button">查询</string>
+
+    <string name="city">城市：</string>
+
+    <string name="temperature">温度：</string>
+
+    <string name="wind">风向：</string>
+
+    <string name="pm2.5">PM2.5含量：</string>
+
+    <string name="air_quality">空气质量：</string>
+
+    <string name="update_time">更新时间：</string>
+
+</resources>
