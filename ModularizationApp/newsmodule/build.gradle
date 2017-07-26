@@ -1,14 +1,17 @@
-apply plugin: 'com.android.application'
+if (isRunAlone.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
 
     defaultConfig {
-        applicationId "com.jacksen.newsmodule"
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -21,14 +24,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            if (isRunAlone.toBoolean()) {
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/release/AndroidManifest.xml'
+            }
+        }
+    }
+
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:26.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+
+    compile project(':baselib')
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
 }

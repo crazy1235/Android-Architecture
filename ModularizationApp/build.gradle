@@ -8,7 +8,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-alpha8'
-
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -27,18 +26,26 @@ task clean(type: Delete) {
 
 
 ext {
+
+    // base
     minSdkVersion = 16
     targetSdkVersion = 26
     compileSdkVersion = 26
-    buildToolsVersion = "26.0.0"
+    buildToolsVersion = "26.0.1"
     supportLibVersion = "26.0.0"
     espressoVersion = "2.2.2"
     testRunnerVersion = "0.5"
     junitVersion = "4.12"
 
-    //
+    // network
     retrofitVersion = "2.1.0"
 
-    //
+    // img loader
     glideVersion = "3.7.0"
+
+    // others
+    arouterApiVersion = "1.2.1.1"
+    arouterCompilerVersion = "1.1.2.1"
+    arouterAnnotationVersion = "1.0.3"
+
 }
