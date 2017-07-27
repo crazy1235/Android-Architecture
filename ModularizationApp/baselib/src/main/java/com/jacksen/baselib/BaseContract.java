@@ -6,5 +6,5 @@ package com.jacksen.baselib;
 
 public class BaseContract {
 
-    public static final String BASE_URL = "";
+    public static final String BASE_URL = "http://news.at.zhihu.com/api/4/news/";
 }

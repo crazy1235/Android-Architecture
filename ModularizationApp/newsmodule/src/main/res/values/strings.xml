@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NewsModule</string>
+
+    <string name="loading">正在加载&#8230;</string>
+
+    <string name="title_news_list">今日新闻</string>
+    <string name="transition_name_img">transition_name_img</string>
 </resources>
