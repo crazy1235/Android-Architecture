@@ -2,14 +2,20 @@ package com.jacksen.newsmodule.detail;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.jacksen.baselib.base.BaseActivity;
 import com.jacksen.newsmodule.NewsContract;
@@ -20,7 +26,7 @@ import com.jacksen.newsmodule.R;
  *
  * @author jacksen
  */
-public class NewsDetailActivity extends BaseActivity implements NewsContract.NewsDetailView {
+public class NewsDetailActivity extends BaseActivity implements NewsContract.NewsDetailView, View.OnClickListener {
 
     private String id;
 
@@ -32,6 +38,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsContract.New
     private ImageView toolbar_image;
     private TextView toolbar_text;
     private TextView news_detail_text;
+
+    private FloatingActionButton floatingBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,11 @@ public class NewsDetailActivity extends BaseActivity implements NewsContract.New
         toolbar_image = findViewById(R.id.toolbar_image);
         toolbar_text = findViewById(R.id.toolbar_text);
         news_detail_text = findViewById(R.id.news_detail_text);
+        floatingBtn = findViewById(R.id.floating_btn);
+        floatingBtn.setOnClickListener(this);
+
+        toolbarLayout.setExpandedTitleColor(Color.WHITE);
+        toolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
 
         presenter = new NewsDetailPresenter(this);
         presenter.loadNewsDetail(id);
@@ -82,4 +95,18 @@ public class NewsDetailActivity extends BaseActivity implements NewsContract.New
         Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.floating_btn) {
+            ARouter.getInstance()
+                    .build("/newsmodule/news_comment")
+                    .withBoolean("needLogin", true)
+                    .navigation(this, new NavCallback() {
+                        @Override
+                        public void onArrival(Postcard postcard) {
+
+                        }
+                    });
+        }
+    }
 }

@@ -15,7 +15,7 @@ import com.jacksen.baselib.base.BaseActivity;
  *
  * @author jacksen
  */
-@Route(path = "/loginmodule/login")
+@Route(path = "/loginmodule/login", extras = 1)
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private TextInputEditText emailInputEt;
