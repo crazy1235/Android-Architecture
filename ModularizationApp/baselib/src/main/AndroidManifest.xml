@@ -6,4 +6,21 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <application>
+
+        <activity android:name=".base.SchemeFilterActivity">
+            <intent-filter>
+                <data
+                    android:host=".jacksen.com"
+                    android:scheme="http" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+
+        </activity>
+
+    </application>
+
 </manifest>

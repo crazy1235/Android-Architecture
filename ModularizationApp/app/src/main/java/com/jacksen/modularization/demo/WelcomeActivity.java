@@ -72,7 +72,8 @@ public class WelcomeActivity extends AppCompatActivity {
      * 启动登录页
      */
     private void startLoginPage() {
-        ARouter.getInstance().build("/loginmodule/login").navigation();
+        ARouter.getInstance().build("/loginmodule/login").greenChannel().navigation();
+        finish();
     }
 
 

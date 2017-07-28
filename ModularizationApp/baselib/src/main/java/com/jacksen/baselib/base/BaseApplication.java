@@ -22,4 +22,10 @@ public class BaseApplication extends Application {
         }
         ARouter.init(this);
     }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ARouter.getInstance().destroy();
+    }
 }

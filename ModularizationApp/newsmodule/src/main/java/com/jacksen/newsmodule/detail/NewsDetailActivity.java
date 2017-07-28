@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +51,9 @@ public class NewsDetailActivity extends BaseActivity implements NewsContract.New
         Intent intent = getIntent();
         if (intent != null) {
             id = intent.getExtras().getString("id", "");
+            if (!TextUtils.isEmpty(id)) {
+                Toast.makeText(this, "欢迎" + id + "登录", Toast.LENGTH_SHORT).show();
+            }
         }
 
         toolbarLayout = findViewById(R.id.collapsing_layout);
@@ -100,11 +105,16 @@ public class NewsDetailActivity extends BaseActivity implements NewsContract.New
         if (view.getId() == R.id.floating_btn) {
             ARouter.getInstance()
                     .build("/newsmodule/news_comment")
-                    .withBoolean("needLogin", true)
                     .navigation(this, new NavCallback() {
                         @Override
                         public void onArrival(Postcard postcard) {
+                            Log.d("NewsDetailActivity", "onArrival");
+                        }
 
+                        @Override
+                        public void onInterrupt(Postcard postcard) {
+                            super.onInterrupt(postcard);
+                            Log.d("NewsDetailActivity", "onInterrupt");
                         }
                     });
         }

@@ -2,6 +2,7 @@ package com.jacksen.loginmodule;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -9,13 +10,14 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jacksen.baselib.base.BaseActivity;
+import com.jacksen.baselib.base.BaseContract;
 
 /**
  * login activity
  *
  * @author jacksen
  */
-@Route(path = "/loginmodule/login", extras = 1)
+@Route(path = "/loginmodule/login", extras = BaseContract.EXTRA_INTERCEPTOR_LOGIN)
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private TextInputEditText emailInputEt;
@@ -42,14 +44,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.login_in_btn) {
-            Toast.makeText(this, "login", Toast.LENGTH_SHORT).show();
-
-            ARouter.getInstance().build("/newsmodule/news_list").withString("userId", "crazy1235").navigation();
-
+            judgeAndJump();
         } else if (i == R.id.skip_login_btn) {
             Toast.makeText(this, "skip", Toast.LENGTH_SHORT).show();
-
             ARouter.getInstance().build("/newsmodule/news_list").navigation();
         }
+    }
+
+    /**
+     * TODO 登录验证
+     */
+    private void judgeAndJump() {
+        String email = emailInputEt.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            emailInputEt.setError("请输入email");
+            return;
+        }
+        String pwd = pwdInputEt.getText().toString();
+        if (TextUtils.isEmpty(pwd)) {
+            pwdInputEt.setError("请输入password");
+            return;
+        }
+        ARouter.getInstance().build("/newsmodule/news_list").withString("userId", email).navigation();
     }
 }
