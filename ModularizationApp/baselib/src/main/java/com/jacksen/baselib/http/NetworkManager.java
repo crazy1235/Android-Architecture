@@ -1,6 +1,6 @@
 package com.jacksen.baselib.http;
 
-import com.jacksen.baselib.BaseContract;
+import com.jacksen.baselib.base.BaseContract;
 
 import java.util.concurrent.TimeUnit;
 

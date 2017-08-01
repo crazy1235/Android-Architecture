@@ -10,4 +10,8 @@ public class LoginStateException extends IllegalStateException {
         super("登录状态异常，需要重新登录");
     }
 
+    public LoginStateException(String info) {
+        super(info);
+    }
+
 }

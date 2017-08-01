@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +29,7 @@ import com.jacksen.newsmodule.R;
  */
 public class NewsDetailActivity extends BaseActivity implements NewsContract.NewsDetailView, View.OnClickListener {
 
+    private String userId;
     private String id;
 
     private NewsContract.NewsDetailPres presenter;
@@ -50,10 +50,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsContract.New
 
         Intent intent = getIntent();
         if (intent != null) {
+            userId = intent.getExtras().getString("userId", "");
             id = intent.getExtras().getString("id", "");
-            if (!TextUtils.isEmpty(id)) {
-                Toast.makeText(this, "欢迎" + id + "登录", Toast.LENGTH_SHORT).show();
-            }
         }
 
         toolbarLayout = findViewById(R.id.collapsing_layout);
@@ -104,7 +102,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsContract.New
     public void onClick(View view) {
         if (view.getId() == R.id.floating_btn) {
             ARouter.getInstance()
-                    .build("/newsmodule/news_comment")
+                    .build("/newsmodule/news_comment/need_login")
+                    .withString("userId", userId)
                     .navigation(this, new NavCallback() {
                         @Override
                         public void onArrival(Postcard postcard) {

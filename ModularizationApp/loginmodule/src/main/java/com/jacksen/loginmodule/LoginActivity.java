@@ -47,7 +47,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             judgeAndJump();
         } else if (i == R.id.skip_login_btn) {
             Toast.makeText(this, "skip", Toast.LENGTH_SHORT).show();
-            ARouter.getInstance().build("/newsmodule/news_list").navigation();
+            ARouter.getInstance().build("/newsmodule/news_list").greenChannel().navigation();
         }
     }
 

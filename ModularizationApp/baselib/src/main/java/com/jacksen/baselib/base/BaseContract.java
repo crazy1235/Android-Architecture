@@ -6,6 +6,20 @@ package com.jacksen.baselib.base;
 
 public class BaseContract {
 
+    public static final String BASE_URL = "http://news.at.zhihu.com/api/4/news/";
+
+    public interface LOGIN {
+
+        String TAG_LOGIN = "tag_login";
+
+        int CODE_LOGIN_SUCCESS = 0x01;
+
+        int CODE_LOGIN_FAILED = 0x02;
+
+        int CODE_LOGIN_CANCEL = 0x03;
+    }
+
+
     /**
      * login activity的拦截标志
      */
