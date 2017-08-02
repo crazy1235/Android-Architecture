@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jacksen.baselib.base.BaseActivity;
@@ -25,10 +26,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private Button loginInBtn;
     private Button skipLoginBtn;
 
+    @Autowired(name = "flag_skip")
+    boolean skipFlag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ARouter.getInstance().inject(this);
 
         emailInputEt = findViewById(R.id.email_input_et);
         pwdInputEt = findViewById(R.id.pwd_input_et);
@@ -38,6 +43,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         loginInBtn.setOnClickListener(this);
         skipLoginBtn.setOnClickListener(this);
+
+        Toast.makeText(this, "skipFlag:" + skipFlag, Toast.LENGTH_SHORT).show();
+        if (skipFlag) {
+            skipLoginBtn.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -65,6 +75,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             pwdInputEt.setError("请输入password");
             return;
         }
-        ARouter.getInstance().build("/newsmodule/news_list").withString("userId", email).navigation();
+
+        if (skipFlag) {
+            LoginListenerMgr.newInstance().callLoginSuccess(email);
+        } else {
+            ARouter.getInstance().build("/newsmodule/news_list").withString("userId", email).navigation();
+        }
+
+        finish();
     }
 }

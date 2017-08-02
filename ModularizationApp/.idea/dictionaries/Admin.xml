@@ -5,6 +5,7 @@
       <w>baselib</w>
       <w>loginmodule</w>
       <w>newsmodule</w>
+      <w>userservice</w>
     </words>
   </dictionary>
 </component>

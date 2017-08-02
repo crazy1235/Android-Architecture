@@ -1,10 +1,6 @@
-package com.jacksen.baselib.arouter;
+package com.jacksen.loginmodule;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -13,6 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Interceptor;
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback;
 import com.alibaba.android.arouter.facade.template.IInterceptor;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.jacksen.baselib.arouter.LoginCallback;
 import com.jacksen.baselib.base.BaseContract;
 
 /**
@@ -25,6 +22,7 @@ public class LoginInterceptor implements IInterceptor {
     private Context context;
     private InterceptorCallback callback;
     private Postcard postcard;
+    private UserService userService;
 
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
@@ -37,12 +35,33 @@ public class LoginInterceptor implements IInterceptor {
             if (TextUtils.isEmpty(userId)) {
                 this.callback = callback;
                 this.postcard = postcard;
-                ARouter.getInstance().build("/loginmodule/login").greenChannel().navigation();
+
+                userService.login(context, new LoginCallback() {
+                    @Override
+                    public void loginSuccess(String userId) {
+
+                    }
+
+                    @Override
+                    public void loginCancel() {
+
+                    }
+
+                    @Override
+                    public void loginFailure(String errorMsg) {
+
+                    }
+                });
+//
             }
 //            callback.onInterrupt(new LoginStateException());
         } else {
             callback.onContinue(postcard);
         }
+
+//        callback.onContinue(postcard);
+
+//        ARouter.getInstance().build("/loginmodule/login").withBoolean("flag_skip", false).greenChannel().navigation();
     }
 
     @Override
@@ -50,12 +69,14 @@ public class LoginInterceptor implements IInterceptor {
         this.context = context;
         Log.d("LoginInterceptor", context.toString());
 
-        LoginBroadcastReceiver receiver = new LoginBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        LocalBroadcastManager.getInstance(context).registerReceiver(receiver, intentFilter);
+        userService = (UserService) ARouter.getInstance().build("/user/userservice").navigation();
+
+//        LoginBroadcastReceiver receiver = new LoginBroadcastReceiver();
+//        IntentFilter intentFilter = new IntentFilter();
+//        LocalBroadcastManager.getInstance(context).registerReceiver(receiver, intentFilter);
     }
 
-    public class LoginBroadcastReceiver extends BroadcastReceiver {
+  /*  public class LoginBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -68,5 +89,5 @@ public class LoginInterceptor implements IInterceptor {
                 callback.onInterrupt(new LoginStateException("用户取消"));
             }
         }
-    }
+    }*/
 }
