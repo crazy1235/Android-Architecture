@@ -1,6 +1,5 @@
 package com.jacksen.loginmodule;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -38,9 +37,9 @@ public class LoginListenerMgr {
 
         Intent intent = new Intent(context, LoginActivity.class);
         intent.putExtra("flag_skip", true);
-        if (!(context instanceof Activity)) {
+     /*   if (!(context instanceof Activity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
+        }*/
         context.startActivity(intent);
 
 //        ARouter.getInstance().build("/loginmodule/login").greenChannel().navigation();
