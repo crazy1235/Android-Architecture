@@ -1,6 +1,5 @@
 package com.jacksen.newsmodule.list;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -30,8 +29,6 @@ import java.util.List;
 public class NewsListActivity extends BaseActivity implements NewsContract.NewsListView, SwipeRefreshLayout.OnRefreshListener {
 
     private NewsContract.NewsListPres presenter;
-
-    private ProgressDialog loadingDialog;
 
     private NewsListAdapter adapter;
 
@@ -79,17 +76,7 @@ public class NewsListActivity extends BaseActivity implements NewsContract.NewsL
         });
     }
 
-    @Override
-    public void showLoading() {
-        loadingDialog = ProgressDialog.show(this, "", getString(R.string.loading));
-    }
 
-    @Override
-    public void hideLoading() {
-        if (loadingDialog != null && loadingDialog.isShowing()) {
-            loadingDialog.dismiss();
-        }
-    }
 
     @Override
     public void loadNewsListSuccess(List<NewsListBean.NewsDataBean> newsDataBeans) {

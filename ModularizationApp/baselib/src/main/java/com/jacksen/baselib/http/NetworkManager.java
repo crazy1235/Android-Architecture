@@ -87,4 +87,6 @@ public class NetworkManager {
         return retrofit.create(clazz);
     }
 
+
+
 }
