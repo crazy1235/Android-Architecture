@@ -12,8 +12,11 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jacksen.baselib.base.BaseActivity;
+import com.jacksen.baselib.http.NetworkManager;
+import com.jacksen.baselib.http.SimpleObserver;
 import com.jacksen.baselib.utils.XOnItemClickListener;
 import com.jacksen.newsmodule.NewsContract;
+import com.jacksen.newsmodule.NewsService;
 import com.jacksen.newsmodule.R;
 import com.jacksen.newsmodule.detail.NewsDetailActivity;
 import com.jude.easyrecyclerview.EasyRecyclerView;
@@ -54,7 +57,9 @@ public class NewsListActivity extends BaseActivity implements NewsContract.NewsL
 
         initView();
 
-        presenter.loadNewsList("20170527");
+//        presenter.loadNewsList("20170527");
+
+        loadDataFromNet("20170808");
     }
 
     private void initView() {
@@ -76,7 +81,16 @@ public class NewsListActivity extends BaseActivity implements NewsContract.NewsL
         });
     }
 
-
+    private void loadDataFromNet(String date) {
+        NetworkManager.getInstance()
+                .observe(NetworkManager.getInstance().create(NewsService.class).getNews(date))
+                .subscribe(new SimpleObserver<NewsListBean>(this) {
+                    @Override
+                    public void onNext(NewsListBean newsListBean) {
+                        super.onNext(newsListBean);
+                    }
+                });
+    }
 
     @Override
     public void loadNewsListSuccess(List<NewsListBean.NewsDataBean> newsDataBeans) {

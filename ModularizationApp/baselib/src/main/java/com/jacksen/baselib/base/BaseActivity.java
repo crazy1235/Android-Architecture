@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * Created by jacksen on 2017/7/25.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
 
     private ProgressDialog loadingDialog;
@@ -23,10 +23,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
     public void showLoading() {
         loadingDialog = ProgressDialog.show(this, "", "");
     }
 
+    @Override
     public void hideLoading() {
         if (loadingDialog != null && loadingDialog.isShowing()) {
             loadingDialog.dismiss();

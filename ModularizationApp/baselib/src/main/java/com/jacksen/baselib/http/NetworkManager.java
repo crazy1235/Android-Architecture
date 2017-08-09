@@ -4,6 +4,9 @@ import com.jacksen.baselib.base.BaseContract;
 
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -87,6 +90,12 @@ public class NetworkManager {
         return retrofit.create(clazz);
     }
 
+
+    public <T> Observable<T> observe(Observable<T> observable) {
+        return observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
 
 }
